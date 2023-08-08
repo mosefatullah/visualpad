@@ -1,0 +1,639 @@
+/** FONT ***/
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap");
+
+/*
+$primary-color: #fff;
+$secondary-color: #f8f8f8;
+$special-color: #0096ff;
+$primary-text-color: #333;
+$secondary-text-color: #797979;
+$special-text-color: #fff;
+$primary-font: "Montserrat", sans-serif;*/
+
+$primary-color: #1e1e1e;
+$secondary-color: #181818;
+$special-color: #0096ff;
+$primary-text-color: #fff;
+$secondary-text-color: #afafaf;
+$special-text-color: #fff;
+$primary-font: "Montserrat", sans-serif;
+
+/*** SCROLLBAR ***/
+::-webkit-scrollbar {
+ width: 0.1em;
+ height: 0.1em;
+ background-color: transparent;
+}
+body::-webkit-scrollbar {
+ width: 0.3em;
+}
+::-webkit-scrollbar-track {
+ box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+::-webkit-scrollbar-thumb {
+ background-color: rgba($primary-text-color, 0.2);
+}
+
+/*** ALL ELEMENT ***/
+* {
+ box-sizing: border-box;
+ font-family: $primary-font;
+}
+
+/*** BODY ELEMENT ***/
+body {
+ background-color: $primary-color !important;
+ color: $primary-text-color;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+ font-weight: 600;
+ line-height: 2.8rem;
+ letter-spacing: 0.01rem;
+ user-select: none;
+}
+p {
+ margin: 0;
+ font-weight: 400;
+ line-height: 1.55rem;
+}
+li {
+ list-style: none;
+}
+a,
+.btn,
+svg,
+button,
+.button {
+ cursor: pointer;
+}
+.tooltip {
+ .tooltip-inner {
+  padding: 0.2rem;
+  font-size: 0.7rem;
+ }
+}
+.tooltip-arrow::before {
+}
+.btn-primary {
+ background-color: $special-color !important;
+ color: $special-text-color;
+}
+
+/*** CUSTOM ***/
+
+/*** __main **/
+.__main {
+ display: flex;
+ /*** __sidebar **/
+ .__sidebar {
+  width: 48px;
+  height: 100vh;
+  background-color: $secondary-color;
+  user-select: none;
+  border-right: 1px solid rgba($primary-text-color, 0.1);
+  .__switches {
+   div {
+    padding: 0.2rem 0;
+    &.active {
+     border-left: 2.5px solid $primary-text-color;
+     svg {
+      fill: $primary-text-color;
+     }
+    }
+    svg {
+     fill: $secondary-text-color;
+     padding: 0.6rem;
+     &:hover {
+      fill: $primary-text-color;
+     }
+    }
+   }
+   .position-absolute {
+    bottom: 30px;
+   }
+  }
+  .__switches > div:first-child svg {
+   padding: 0.7rem;
+  }
+ }
+}
+
+/*** __sidepanel **/
+.__sidepanel {
+ width: 300px;
+ height: 100vh;
+ padding: 0.5rem 0;
+ overflow: hidden;
+ position: relative;
+ overflow-y: scroll;
+ background-color: $secondary-color;
+ color: $primary-text-color;
+ border-right: 1px solid rgba($primary-text-color, 0.1);
+ .explorer-section,
+ .search-section,
+ .source-section,
+ .project-section,
+ .extension-section {
+  .title {
+   font-size: 0.6rem;
+   font-weight: 500;
+   margin-bottom: 0.5rem;
+   align-items: center;
+   padding: 0 1rem;
+   .more {
+    margin-left: auto;
+    svg {
+     fill: $primary-text-color;
+     &:hover {
+      border-radius: 0.2rem;
+      background-color: #ffffff28;
+     }
+    }
+   }
+  }
+  .accordion {
+   transition: height 0.5s !important;
+   .accordion-item {
+    border-radius: 0;
+    background-color: transparent !important;
+    color: $primary-text-color;
+    border: none;
+    font-size: 0.65rem;
+    .accordion-header {
+     padding: 0 0.5rem;
+     border-bottom: 1px solid rgba($primary-text-color, 0.2);
+     &:not(.collapsed) {
+      border-bottom: 1px solid rgba($special-color, 0.4);
+     }
+     &:not(.collapsed) svg {
+      transform: rotate(90deg);
+     }
+     svg {
+      fill: $primary-text-color;
+     }
+    }
+    .accordion-collapse {
+     padding: 0.5rem 0.7rem;
+     border-radius: 0;
+     border-bottom: 1px solid rgba($primary-text-color, 0.2);
+     p {
+      line-height: 1rem;
+      padding: 1rem 0;
+     }
+     .btn {
+      font-size: 0.7rem;
+     }
+     div {
+      width: 100%;
+      height: 70vh;
+     }
+    }
+   }
+  }
+  .accordion:last-child .accordion-collapse {
+   border-bottom: none;
+  }
+  #folderExplorer {
+   .accordion-header {
+    &:not(.collapsed) {
+     border-bottom: 1px solid rgba($special-color, 0.4);
+     border-top: 1px solid rgba($special-color, 0.4);
+    }
+   }
+  }
+ }
+ .search-section {
+  .content {
+   input {
+    width: 100%;
+    max-width: 350px;
+    background-color: $primary-color;
+    color: $primary-text-color;
+    border: 1px solid rgba($primary-text-color, 0.4);
+    padding: 0.2rem 1rem;
+    margin-bottom: 0.3rem;
+    font-size: 0.8rem;
+    border-radius: 0.15rem;
+   }
+   .input-group {
+    width: 100%;
+    padding: 0.5rem 0;
+   }
+   button {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.6rem;
+   }
+   .output {
+    margin: 1rem 0;
+    font-size: 0.7rem;
+    p {
+     color: rgba($primary-text-color, 0.5);
+     margin-bottom: 0.4rem;
+    }
+    .list-group {
+     margin-bottom: 0.8rem;
+     small {
+      color: rgba($primary-text-color, 0.5);
+     }
+     .li {
+      padding-left: 0.6rem;
+     }
+    }
+   }
+  }
+ }
+ .source-section {
+  .content {
+   p {
+    line-height: 1rem;
+    font-size: 0.7rem;
+    margin-bottom: 0.4rem;
+    padding: 0.5rem 0;
+   }
+   .btn {
+    font-size: 0.7rem;
+   }
+  }
+ }
+ .dragBar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: w-resize;
+  height: 100%;
+  width: 2px;
+  background-color: transparent;
+  &:hover {
+   width: 3px;
+   background-color: rgba($primary-text-color, 0.5);
+  }
+ }
+}
+
+.__all-canvas {
+ .__setting-canvas,
+ .__profile-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($primary-color, 0.4);
+  backdrop-filter: blur(10px);
+  color: $primary-text-color;
+  z-index: 100000;
+  .content {
+   margin: 0 auto;
+   margin-top: 5rem;
+   width: 70%;
+   min-width: 400px;
+   height: 50vh;
+   max-height: 500px;
+   background-color: $secondary-color;
+   border: 1px solid rgba($primary-text-color, 0.1);
+   padding: 1.5rem;
+   border-radius: 0.4rem;
+   overflow: hidden;
+   overflow-y: scroll;
+   font-size: 0.7rem;
+   button {
+    margin-bottom: 2rem;
+    padding: 0.3rem 1rem;
+    font-size: 0.7rem;
+   }
+  }
+ }
+}
+
+/*** __body **/
+.__body {
+ width: 100%;
+ height: 100vh;
+ overflow: hidden;
+ overflow-y: scroll;
+ position: relative;
+ .__top {
+  user-select: none;
+  width: 100%;
+  display: flex;
+  height: 40px;
+  background-color: $secondary-color;
+  border-bottom: 1px solid rgba($primary-text-color, 0.1);
+  overflow: hidden;
+  overflow-x: scroll;
+  .index {
+   display: flex;
+   cursor: pointer;
+   width: fit-content;
+   height: 100%;
+   padding: 0.4rem 0.7rem;
+   color: $primary-text-color;
+   border: 1px solid rgba($primary-text-color, 0.05);
+   &.active {
+    background-color: $primary-color;
+    font-style: italic;
+    border-right: 1px solid rgba($primary-text-color, 0.1);
+    border-bottom: 1.5px solid $primary-text-color;
+   }
+   &.active:not(:first-child) {
+    border: 1px solid rgba($primary-text-color, 0.1);
+    border-bottom: 1.5px solid $primary-text-color;
+   }
+   &:hover {
+    background-color: $primary-color;
+   }
+   p {
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
+   }
+   span {
+    font-size: 0.87rem;
+    svg {
+     fill: $primary-text-color;
+    }
+    &:not(.unhover):hover {
+     background-color: rgba($primary-text-color, 0.1);
+     border-radius: 0.2rem;
+    }
+   }
+   &.right:hover {
+    background-color: rgba($primary-text-color, 0.1);
+   }
+  }
+ }
+
+ .__text-editor {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 40px);
+  overflow: hidden;
+  overflow-y: scroll;
+  background-image: url(../images/vspad-d.png);
+  background-position: center;
+
+  .__welcome-page {
+   user-select: none;
+   p:nth-child(2) {
+    color: rgba($primary-text-color, 0.5);
+   }
+   .list-group {
+    li {
+     cursor: pointer;
+     width: fit-content;
+     font-size: 0.8rem;
+     margin: 0.1rem 0;
+     color: $special-color;
+     &:hover {
+      color: $primary-text-color;
+     }
+    }
+   }
+   code {
+    span {
+     display: inline-block;
+     width: 35px;
+    }
+   }
+   .alert {
+    font-size: 0.75rem;
+   }
+  }
+  .__allPages {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   .page {
+    width: 100%;
+    height: 100%;
+    background-color: $primary-color;
+    textarea {
+     width: 100%;
+     height: 100%;
+     padding: 2rem;
+     background-color: $primary-color;
+     color: $primary-text-color;
+    }
+   }
+  }
+ }
+
+ .toast-container {
+  .toast {
+   background-color: $primary-color;
+   margin: 0.4rem 0;
+   border-color: rgba($primary-text-color, 0.1);
+   color: $primary-text-color;
+   svg {
+    fill: $primary-text-color;
+   }
+   .toast-header {
+    background-color: $primary-color;
+    color: $primary-text-color;
+   }
+   .toast-body {
+    p {
+     font-size: 0.65rem;
+     line-height: 1.2rem;
+     color: rgba($primary-text-color, 0.8);
+    }
+    button {
+     font-size: 0.6rem;
+     background-color: $special-color;
+    }
+    button:first-child {
+     margin-left: auto;
+    }
+   }
+  }
+ }
+
+ .__floatbottom {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  background-color: $primary-color;
+  .tab {
+   font-size: 0.7rem;
+   user-select: none;
+   width: fit-content;
+   padding: 0 0.4rem;
+   color: rgba($primary-text-color, 0.4);
+   svg {
+    fill: rgba($primary-text-color, 0.4);
+    margin-right: 0.5rem;
+   }
+   &.active {
+    color: $primary-text-color;
+    border-bottom: 1px solid $primary-text-color;
+    svg {
+     fill: $primary-text-color;
+    }
+   }
+  }
+  .dragBar {
+   cursor: s-resize;
+   width: 100%;
+   height: 1px;
+   background-color: $special-color;
+   &:hover {
+    height: 3px;
+    background-color: rgba($primary-text-color, 0.5);
+   }
+  }
+  .__terminal,
+  .__console,
+  .__logs {
+   width: 100%;
+   height: 100% !important;
+  }
+  .__console,
+  .__logs {
+   background-color: $secondary-color;
+   padding: 1rem;
+   font-size: 0.7rem;
+   p {
+    font-family: monospace;
+   }
+  }
+  .__logs {
+   white-space: pre-line;
+  }
+ }
+}
+
+/*** __previewbar **/
+.__previewbar {
+ position: fixed;
+ top: 0;
+ right: 0;
+ width: 75%;
+ min-width: 350px;
+ height: 100%;
+ background-color: $secondary-color;
+ padding: 1rem;
+ border-left: 1px solid rgba($primary-text-color, 0.1);
+ /* The browser window */
+ .container {
+  border: 3px solid #f1f1f1;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  margin-top: 1rem;
+  height: 90%;
+  .row {
+   padding: 10px;
+   background: #f1f1f1;
+   border-top-left-radius: 4px;
+   border-top-right-radius: 4px;
+  }
+  .column {
+   float: left;
+  }
+  .left {
+   width: 15%;
+  }
+  .right {
+   width: 10%;
+  }
+  .middle {
+   width: 75%;
+  }
+  .row:after {
+   content: "";
+   display: table;
+   clear: both;
+  }
+  .dot {
+   margin-top: 4px;
+   height: 12px;
+   width: 12px;
+   background-color: #bbb;
+   border-radius: 50%;
+   display: inline-block;
+  }
+  input[type="text"] {
+   width: 100%;
+   border-radius: 3px;
+   border: none;
+   background-color: white;
+   margin-top: -8px;
+   height: 25px;
+   color: #666;
+   padding: 5px;
+  }
+  .bar {
+   width: 17px;
+   height: 3px;
+   background-color: #aaa;
+   margin: 3px 0;
+   display: block;
+  }
+  .content {
+   padding: 10px;
+  }
+ }
+}
+
+/*** __footer **/
+.__footer {
+ width: 100%;
+ height: 30px;
+ user-select: none;
+ background-color: $secondary-color;
+ color: $primary-text-color;
+ border-top: 1px solid rgba($primary-text-color, 0.1);
+ display: flex;
+ align-items: center;
+ position: fixed;
+ bottom: 0;
+ left: 0;
+ .button {
+  padding: 0.1rem 0.7rem;
+  font-size: 0.7rem;
+  height: 100%;
+  svg {
+   fill: $primary-text-color;
+  }
+ }
+ .remote {
+  background-color: $special-color;
+  &:hover {
+   background-color: rgba($special-color, 0.8);
+  }
+  svg {
+   fill: $special-text-color;
+   padding-top: 3px;
+  }
+ }
+ .console {
+  height: 100%;
+  padding: 0 0.5rem;
+  &:hover {
+   background-color: rgba($primary-text-color, 0.1);
+  }
+  .button {
+   display: flex;
+   align-items: center;
+   padding: 0.1rem;
+   span {
+    margin-left: 2px;
+    margin-right: 5px;
+   }
+  }
+ }
+ .right {
+  .button:hover {
+   background-color: rgba($primary-text-color, 0.1);
+  }
+ }
+}
