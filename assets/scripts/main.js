@@ -39,12 +39,18 @@ allButtonsOfSidebar.map((b) => {
   container = $(".__sidepanel " + b + "-section");
 
  button.on("click", () => {
-  allButtonsOfSidebar.map((c) => {
-   $(".__sidebar " + c).removeClass("active");
-   $(".__sidepanel " + c + "-section").hide();
-  });
-  button.addClass("active");
-  container.show();
+  if (button.hasClass("active")) {
+   button.removeClass("active");
+   container.parent().hide();
+  } else {
+   allButtonsOfSidebar.map((c) => {
+    $(".__sidebar " + c).removeClass("active");
+    $(".__sidepanel " + c + "-section").hide();
+   });
+   button.addClass("active");
+   container.parent().show();
+   container.show();
+  }
  });
 });
 
@@ -230,13 +236,13 @@ editor.commands.addCommands([
 
 // FIND
 
- editor.find('lorem',{
-     backwards: false,
-     wrap: false,
-     caseSensitive: false,
-     wholeWord: false,
-     regExp: false
- });
+editor.find("lorem", {
+ backwards: false,
+ wrap: false,
+ caseSensitive: false,
+ wholeWord: false,
+ regExp: false,
+});
 // editor.findNext();
 // editor.findPrevious();
 
