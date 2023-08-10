@@ -571,6 +571,7 @@ button,
   user-select: none;
 }
 .__previewbar .container .rows {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 10px;
   background: #f1f1f1;
 }
@@ -607,7 +608,8 @@ button,
   margin-top: -8px;
   height: 25px;
   color: #666;
-  padding: 5px;
+  padding: 8px;
+  font-size: 0.8rem;
 }
 .__previewbar .container .bar {
   width: 17px;
@@ -619,8 +621,8 @@ button,
 .__previewbar .container .content {
   width: 100%;
   height: 100%;
-  background-color: wheat;
-  color: #fff;
+  background-color: #fff;
+  color: #181818;
   overflow: scroll;
 }
 

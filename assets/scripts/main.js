@@ -48,7 +48,6 @@ allButtonsOfSidebar.map((b) => {
  });
 });
 
-
 //// BODY
 const closeIndex = document.querySelectorAll(
  ".__body .__top .index:not(.right) span"
@@ -58,7 +57,7 @@ const pageIndex = document.querySelectorAll(
 );
 
 const previewBox = $(".__previewbar .content");
-const previewCode = $("#example");
+const previewCode = $("#vspad-code-editor");
 
 $(".__body .__top .welcome").on("click", () => {
  $(".__allPages").hide();
@@ -100,9 +99,61 @@ closeIndex.forEach((c) => {
  };
 });
 
-var editor = ace.edit("example", {
- theme: "ace/theme/dracula", // ace/theme/twilight
- mode: "ace/mode/html",
+let themes = [
+ "twilight",
+ "tomorrow",
+ "tomorrow_night",
+ "tomorrow_night_blue",
+ "tomorrow_night_bright",
+ "monokai",
+ "dracula",
+ "github",
+ "github_dark",
+ "chrome",
+ "eclipse",
+ "terminal",
+ "clouds",
+ "vibrant_ink",
+ "ambiance",
+];
+
+let modes = [
+ "html",
+ "css",
+ "javascript",
+ "php",
+ "python",
+ "java",
+ "c_cpp",
+ "csharp",
+ "ruby",
+ "typescript",
+ "json",
+ "xml",
+ "markdown",
+ "mysql",
+ "sass",
+ "less",
+ "scss",
+ "text",
+ "plain_text",
+ "coffee",
+ "lua",
+ "powershell",
+ "batchfile",
+ "dockerfile",
+ "ini",
+ "perl",
+ "pgsql",
+ "r",
+ "rust",
+ "sql",
+ "yaml",
+ "handlebars",
+];
+
+// CONFIG CODE EDITOR
+let editor = ace.edit("vspad-code-editor", {
  value: `
  <!DOCTYPE html>
  <html lang="en">
@@ -112,34 +163,70 @@ var editor = ace.edit("example", {
      <title>Document</title>
  </head>
  <body>
-     
+ <h2>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Harum placeat, magni, iusto nesciunt fuga, recusandae perferendis repudiandae voluptates ratione vero quasi dolorum corporis accusantium rem in ab! Dolorem, et dolorum!</h2>
+ <br>
+ <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis sequi commodi illo illum expedita eaque possimus nostrum voluptatum doloribus voluptas? Molestias recusandae ex cumque rem laboriosam laudantium perferendis, quaerat corporis modi soluta veniam asperiores ab sapiente aperiam deserunt inventore facilis quisquam autem. Sint officia animi nam excepturi rerum nemo consequuntur dolores necessitatibus ad cupiditate odio doloremque recusandae perspiciatis voluptatum ea omnis, quas porro tenetur neque! Alias quae ex veritatis</p>
  </body>
  </html>`,
 });
 
-let changingPreview = () => {
-previewBox.html(editor.getValue());
-};
-changingPreview();
+// THEME & LANGUAGE
+editor.session.setMode("ace/mode/html");
+editor.setTheme("ace/theme/" + themes[8]);
 
-editor.setOption("wrap", 80);
+// STYLES
+editor.container.style.lineHeight = "1.5rem";
+editor.container.style.fontWeight = "400";
+editor.container.style.letterSpacing = "0rem";
+
 editor.setOptions({
- fontFamily: "sans-serif",
- //fontSize: "10pt",
- fontSize: 14,
+ fontFamily: "monospace",
+ fontSize: 16,
  showPrintMargin: false,
  enableSnippets: true,
  showLineNumbers: true,
  tabSize: 2,
- showGutter: true
+ showGutter: true,
+ wrap: true,
 });
-editor.getSession().on('change', changingPreview);
 
-// enable autocompletion and snippets
+// TOOLS
 editor.setOptions({
  enableBasicAutocompletion: true,
  enableLiveAutocompletion: true,
 });
+
+editor.setReadOnly(false);
+
+
+// SELECTION & PREVIEW
+
+let changingPreview = () => {
+ let colrow = editor.selection.getCursor();
+ previewBox.html(editor.getValue());
+ $(".__footer .colrow-btn").html("Ln "+colrow.row + ", Col " + colrow.column);
+};
+let changingCursor = () => {
+ let colrow = editor.selection.getCursor();
+ previewBox.html(editor.getValue());
+ $(".__footer .colrow-btn").html("Ln "+colrow.row + ", Col " + colrow.column);
+};
+changingPreview();
+changingCursor();
+
+editor.session.on("change", changingPreview);
+editor.session.selection.on("changeCursor", changingCursor);
+
+// editor.find('needle',{
+//     backwards: false,
+//     wrap: false,
+//     caseSensitive: false,
+//     wholeWord: false,
+//     regExp: false
+// });
+// editor.findNext();
+// editor.findPrevious();
+
 editor.completers = [
  {
   getCompletions: function (editor, session, pos, prefix, callback) {
@@ -421,7 +508,7 @@ editor.showSettingsMenu();
 /*
 //samples/custom completions
 
-var editor = ace.edit("example");
+var editor = ace.edit("vspad-code-editor");
 editor.session.setMode("ace/mode/html");
 editor.setTheme("ace/theme/tomorrow");
 
@@ -465,7 +552,7 @@ editor.completers = [{
 
 // trigger extension
 ace.require("ace/ext/language_tools");
-var editor = ace.edit("example");
+var editor = ace.edit("vspad-code-editor");
 editor.session.setMode("ace/mode/html");
 editor.setTheme("ace/theme/tomorrow");
 // enable autocompletion and snippets
@@ -479,7 +566,6 @@ editor.setOptions({
 <!-- load ace language tools -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.17.0/ext-language_tools.min.js"></script>
 */
-
 
 //// FLOATBOTTOM
 

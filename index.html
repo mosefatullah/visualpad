@@ -48,6 +48,14 @@
     <link rel="stylesheet" href="assets/styles/bootstrap-5.3.1.min.css" />
     <link rel="stylesheet" href="assets/styles/style.css" />
 
+    <style>
+        .ace_editor,
+        .ace_editor * {
+            font-family: "Monaco", "Menlo", "Ubuntu Mono", "Droid Sans Mono", "Consolas",
+                monospace !important;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -379,7 +387,7 @@
                                 d="m249-207-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
                         </svg></span>
                 </div>
-                <div class="index" index="0">
+                <div class="index active" index="0">
                     <p>index.html</p>
                     <span data-bs-toggle="tooltip" data-bs-title="Close"><svg xmlns="http://www.w3.org/2000/svg"
                             height="17" viewBox="0 -960 960 960" width="17">
@@ -404,7 +412,7 @@
                         </svg></span>
                 </div>
                 <div class="d-flex ms-auto">
-                    <div class="index right welcome active">
+                    <div class="index right welcome">
                         <p>Welcome</p>
                     </div>
                     <div class="index console right" data-bs-toggle="tooltip" data-bs-title="Open Console">
@@ -431,7 +439,7 @@
 
             </div>
             <div class="__text-editor">
-                <div class="__welcome-page p-5">
+                <div class="__welcome-page p-5" style="display: none;">
 
                     <div class="container">
                         <div class="row">
@@ -465,18 +473,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="__allPages" style="display: none;">
+                <div class="__allPages">
                     <div class="page" name="1-index.html">
-                        <div id='example' style="height: 100%;"></div>
+                        <div id='vspad-code-editor' style="height: 100%;"></div>
                         <!-- I have two option : CodeMirror [vscode like] or ACE Editor  -->
                         <!-- Learn more : https://dev.to/dhairyashah/how-i-made-my-own-text-editor-2aj8 -->
                     </div>
-                    <div class="page" name="1-style.scss">
+                    <div class="page" name="1-style.scss" style="display: none;">
                     </div>
-                    <div class="page" name="1-style.css">
+                    <div class="page" name="1-style.css" style="display: none;">
                         <p>Style.css</p>
                     </div>
-                    <div class="page" name="2-index.html">
+                    <div class="page" name="2-index.html" style="display: none;">
                         <p>Index.html Another</p>
                     </div>
 
@@ -507,7 +515,7 @@
                     </div>
                 </div>
 
-                <div class="notifyAlert toast rounded-0 shadow-none" role="alert" aria-live="assertive"
+                <!-- <div class="notifyAlert toast rounded-0 shadow-none" role="alert" aria-live="assertive"
                     aria-atomic="true" data-bs-autohide="false">
                     <div class="toast-body">
                         <div class="d-flex">
@@ -531,7 +539,7 @@
                             <button class="btn btn-primary btn-sm">Show recommendations</button>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
             </div>
 
@@ -613,7 +621,7 @@
                 </div>
 
                 <div class="content">
-                    
+
                 </div>
             </div>
         </div>
@@ -654,7 +662,7 @@
                 <div class="button" data-bs-toggle="tooltip" data-bs-title="Select Language Mode">
                     HTML
                 </div>
-                <div class="button" data-bs-toggle="tooltip" data-bs-title="Go to Line/Column">
+                <div class="button colrow-btn" data-bs-toggle="tooltip" data-bs-title="Go to Line/Column">
                     Ln 550, Col 56
                 </div>
                 <div class="button" data-bs-toggle="tooltip" data-bs-title="Select Encoding">
@@ -673,42 +681,22 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery.terminal/js/jquery.terminal.min.js"></script>
     <script src="assets/scripts/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <!-- Editor -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/ace.min.js" integrity="sha512-YEOWpWsG+L2bJKz1lZDT+R6rdZcSWPydm2G0VRBjihQKS9QDk6N2HQXNjWy9ZJ0EeDA3TEuPhSxK7xb1d1866w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/ace.min.js"
+        integrity="sha512-YEOWpWsG+L2bJKz1lZDT+R6rdZcSWPydm2G0VRBjihQKS9QDk6N2HQXNjWy9ZJ0EeDA3TEuPhSxK7xb1d1866w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.17.0/ext-language_tools.min.js"></script>
-    <!-- Supports -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-html.min.js" integrity="sha512-6IhPctYetE0kOyB79HJmgrXdzZ5NUr5j8/3Q9m8xAgwHgt8aJ6lGP11c/iCjPnVc/4sTOmNdSuejYAFLB2q9xw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-java.min.js" integrity="sha512-qG655vIbAwZyk7hCp2sjxmM9EwuWCaKaNdktiMniHH3yG4vaV8JD6CQ27RuOCnDCPvEJtfWVce0srX09FIVikw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-javascript.min.js" integrity="sha512-1OTGICMOnGWxRYfDZRUdv7qut0O8+9s7JPi6JNxlz1pdpHgDwPo1L0dzYKwftuIb0ossdBzWtkAlnyyYpIEp2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-json.min.js" integrity="sha512-K+H+3WTfhwE9fnfv4makUYJxz4kwIadQPOjGHAmOT96FtMSPRnvnuGR/sZjuNB2MmmHQ94Mnc9zoDxTHKMMEww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-jsx.min.js" integrity="sha512-0xrTUcnNgLN+otsCOligXTqBz2e00mDQUut6lr9wlm0NjciVkpDffA/XsAnx1BrDywgjEcqvgqDo6i9FjWWGIQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-markdown.min.js" integrity="sha512-coQVol89fdWvEcZ1FsGFR9MSAStYr4C472ORVCVAnLJniK0o+mHrVaLNGJxXCA3BdLKwe6wmbu7dsMsE/0dldw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-less.min.js" integrity="sha512-o+0y/VxeLEsmbQRwASbC+QaC8A5WKbHNu+n9KRHoV75m0uUvS7ZaU+XzMUZKbGhVX1W1CadbgOfljX4L4R/eHw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-mysql.min.js" integrity="sha512-dNoKfsusdBI78Bb75gq4FYPnMp171nSNsTk0alJwzp2BPn1f0LP5VseY35F7+UkzHtXpxlgmsBJDLdJoHKNB0w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-objectivec.min.js" integrity="sha512-k4pjO5xzG2rvRxSC2jSH7btmI+kk4tVmzB5ikbVx2sjPuroJGaNw8rjzMG26tYf215BZC79QSzBBCnJygWWDpg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-php.min.js" integrity="sha512-QX5EXTuj2D0ej5xTgwRkGv/0y07m0Rgzxk2lHNbybGaw6desKmBSdHSwGUmQZ5YEKj7BqrjmjGl1k64K2qK45Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-perl.min.js" integrity="sha512-ZWOiiuSx2v3BcFu0EmQviMIc1hinCx+3Z0jTisiYYRRxrAGZbmzq1MMYoqJqojVfaaFXtumV8I7Kd1oJNGc8mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-python.min.js" integrity="sha512-DUdq0nHbbCHQMqQNALNivk5tAdpFWOpm3mplXDwBqIpXD6/vfgXp8fESbfsnePQT3jZKVI3mCbEQumz/S4IHPA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-rust.min.js" integrity="sha512-r09cD2trFOAxNDQELUmNW4CsGdU1qAhywU3C2NEyF/xfzb7031fNfMwgU4iY4E0EQvDpQphzi6is6tsNmn7uhg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-sass.min.js" integrity="sha512-/CdPwiRVkHQzhsRxZsZ1CZ/ipUOl9MHZmzTggMzgXozz8Jh40FV7fIxKlEN/DrGDig8ftS5nOpNbahEIy88W/A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-scss.min.js" integrity="sha512-dvEzrMK8obHSz0knYYJoTeGajqCNYgUPqK4y3L8ok2NNgvMaM82UM4DuH6FJjipwC0S4eKLXwxEI/uVSZ1OPbg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-sql.min.js" integrity="sha512-DbMTRewUZW5koavNMHdzKnJZCKaeSIhTON96cTz/gT59rjI9oDIzOe+gUY1cbqn8TejzfSIAmJJIxUgPh2eGtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-svg.min.js" integrity="sha512-QgvHzX2Iy3Ah40Z0XW12XJ1WFGC5pjumwx3vxQsNA3sXZ5pOtVj3dE4zHHSwKx8ZA25gmNPdD4T0zrwrHZI9Rw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-swift.min.js" integrity="sha512-DKAZodugUEue4f7hMvJRvKDZ30+KLQgubUwnYLHHSUQMXjgt8W6tKcB6g9oIJ9a3aCDUuzVVd1ztl1uGWq2Oag==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-text.min.js" integrity="sha512-o/Hk1fQMV0j7iAwG7LayjUOcD1s+M08PgYzmtJaYJW9CGXJfAA6CzEBrL2MvaZYw5R+uGJrsp/TFmkcE6OV7OA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/mode-typescript.min.js" integrity="sha512-s8tCb7E0iNJLtXBKB+/IiKkBUCl+zfDQpgH3y4FsyXfYaiQZbupmly4z/NDMMg1g0eRnlwyHbia8XTIK/cTPmw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <!-- Themes -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/theme-dracula.min.js" integrity="sha512-Uo9Lu5ebeR+BvhmnAYT4FbW+0/a85TfeWmeMkg//AzcqTrQBbTWIR0BDW+AsJw/i4kdkPcewBHUncKZng4ASEQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/theme-chrome.min.js" integrity="sha512-Iu1SMFSWTfo6i4ZZpT5L+nEIJW5Qzw3W/j6DT1BNNB3GSD2dNxgywMjqWtqKNrbylRYbv0axPPg6uPrm1YG2SA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/theme-github.min.js" integrity="sha512-6PQOyKN8ulKmC/NQlWnhk2Upjza1Lj9pbYD/6+gNuNG+U28jW/x9iJQJuiQkfQAFggY1sToW9va3vY4xfpsJaA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/theme-one_dark.min.js" integrity="sha512-IzwM6BfvrK5Yt8SGQXeP/k6CHHMQRsjHHiqf3txqNuAA1fOIZa1aQEWBsY9X+X+xF60e8xuSIQbNhmFmiaxs4Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/theme-tomorrow_night.min.js" integrity="sha512-wkwPfxmQrrav9ss3Wsxyo0JEkESeFvrn2oA2Z4btNlR2j5wOrSwbk7BV7kYRzQb1f82tf2HYMS76kDTvubbjNw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/theme-twilight.min.js" integrity="sha512-CQbWpkkaPvt/wFnztAIuDoXvww/t8Ls9p98tRFw241zbd7jO743xfx2T8A48OXOUd7mFrb+iRCRrdwv2XDPHYw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/theme-ambiance.min.js" integrity="sha512-FHHAsQIN3yvg0/fCeRhuML/lA62+NqJo4v1ki6LwfbhH/onfeswpD0yCpOTY0pvQ3J6QR3C4Tip4pZmuGi2o7Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+
     <!-- Snippets -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/snippets/css.min.js" integrity="sha512-tfZ+UuI7zErYbXtE4xcbm4klanZXTG5ToQMXjneCw0zDHZMF3lySHHzovKxEsjo40HnLvQ4MtZfmorAD6rMUCQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/snippets/html.min.js" integrity="sha512-q7p8Vl9Pu2j+nfsWLNLlITCMgOlaXKW3ZWar+86WKPsJIcg0qyxNMfavFsunVbrC7d/Ll6f8e2u8Jdy3NM/etA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/snippets/javascript.min.js" integrity="sha512-ctV95Zg8QqVaAc99/cEl0CZEcZv26enZPmyOeXH01M/8qsLFASBrzdvis1u4NNG/5Pbmmxy5cKqX6bi++BHxnA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/snippets/css.min.js"
+        integrity="sha512-tfZ+UuI7zErYbXtE4xcbm4klanZXTG5ToQMXjneCw0zDHZMF3lySHHzovKxEsjo40HnLvQ4MtZfmorAD6rMUCQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/snippets/html.min.js"
+        integrity="sha512-q7p8Vl9Pu2j+nfsWLNLlITCMgOlaXKW3ZWar+86WKPsJIcg0qyxNMfavFsunVbrC7d/Ll6f8e2u8Jdy3NM/etA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/snippets/javascript.min.js"
+        integrity="sha512-ctV95Zg8QqVaAc99/cEl0CZEcZv26enZPmyOeXH01M/8qsLFASBrzdvis1u4NNG/5Pbmmxy5cKqX6bi++BHxnA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <!-- Main -->
     <script src="assets/scripts/main.js"></script>
 </body>
