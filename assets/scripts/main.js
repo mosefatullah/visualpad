@@ -174,7 +174,7 @@ let editor = ace.edit("vspad-code-editor", {
 editor.session.setMode("ace/mode/html");
 editor.setTheme("ace/theme/" + themes[8]);
 
-// STYLES
+// STYLES & OPTIONS
 editor.container.style.lineHeight = "1.5rem";
 editor.container.style.fontWeight = "400";
 editor.container.style.letterSpacing = "0rem";
@@ -188,6 +188,7 @@ editor.setOptions({
  tabSize: 2,
  showGutter: true,
  wrap: true,
+ scrollSpeed: 1.5,
 });
 
 // TOOLS
@@ -198,18 +199,17 @@ editor.setOptions({
 
 editor.setReadOnly(false);
 
-
 // SELECTION & PREVIEW
 
 let changingPreview = () => {
  let colrow = editor.selection.getCursor();
  previewBox.html(editor.getValue());
- $(".__footer .colrow-btn").html("Ln "+colrow.row + ", Col " + colrow.column);
+ $(".__footer .colrow-btn").html("Ln " + colrow.row + ", Col " + colrow.column);
 };
 let changingCursor = () => {
  let colrow = editor.selection.getCursor();
  previewBox.html(editor.getValue());
- $(".__footer .colrow-btn").html("Ln "+colrow.row + ", Col " + colrow.column);
+ $(".__footer .colrow-btn").html("Ln " + colrow.row + ", Col " + colrow.column);
 };
 changingPreview();
 changingCursor();
@@ -217,13 +217,26 @@ changingCursor();
 editor.session.on("change", changingPreview);
 editor.session.selection.on("changeCursor", changingCursor);
 
-// editor.find('needle',{
-//     backwards: false,
-//     wrap: false,
-//     caseSensitive: false,
-//     wholeWord: false,
-//     regExp: false
-// });
+// COMMANDS
+editor.commands.addCommands([
+ {
+  name: "Comment-out",
+  bindKey: { win: "Ctrl-O", mac: "Command-O" },
+  exec: function (editor) {
+   editor.toggleCommentLines();
+  },
+ },
+]);
+
+// FIND
+
+ editor.find('lorem',{
+     backwards: false,
+     wrap: false,
+     caseSensitive: false,
+     wholeWord: false,
+     regExp: false
+ });
 // editor.findNext();
 // editor.findPrevious();
 
