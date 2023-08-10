@@ -408,7 +408,7 @@ button,
 .__body .__text-editor {
   position: relative;
   width: 100%;
-  height: calc(100% - 40px);
+  height: calc(100% - 75px) !important;
   overflow: hidden;
   overflow-y: scroll;
   background-image: url(../images/vspad-d.png);
@@ -448,13 +448,16 @@ button,
   width: 100%;
   height: 100%;
   background-color: #1e1e1e;
+  position: relative;
 }
-.__body .__text-editor .__allPages .page textarea {
-  width: 100%;
-  height: 100%;
-  padding: 2rem;
-  background-color: #1e1e1e;
-  color: #fff;
+.__body .__text-editor .__allPages .page .ace_scroller {
+  padding-bottom: 5rem !important;
+}
+.__body .__text-editor .__allPages .page .ace_gutter-cell {
+  text-align: left;
+}
+.__body .__text-editor .__allPages .page .ace_fold-widget {
+  float: right;
 }
 .__body .toast-container .toast {
   background-color: #1e1e1e;
@@ -489,6 +492,7 @@ button,
   height: 400px;
   overflow: hidden;
   background-color: #1e1e1e;
+  z-index: 100;
 }
 .__body .__floatbottom .tab {
   font-size: 0.7rem;
@@ -549,31 +553,37 @@ button,
   background-color: #181818;
   padding: 1rem;
   border-left: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 10000;
   /* The browser window */
 }
+.__previewbar .btn-primary svg {
+  fill: #fff;
+}
 .__previewbar .container {
+  position: relative;
   border: 3px solid #f1f1f1;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   margin-top: 1rem;
+  padding: 0;
   height: 90%;
+  overflow: hidden;
+  user-select: none;
 }
-.__previewbar .container .row {
+.__previewbar .container .rows {
   padding: 10px;
   background: #f1f1f1;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
 }
-.__previewbar .container .column {
+.__previewbar .container .rows .column {
   float: left;
 }
-.__previewbar .container .left {
+.__previewbar .container .rows .left {
   width: 15%;
 }
-.__previewbar .container .right {
+.__previewbar .container .rows .right {
   width: 10%;
 }
-.__previewbar .container .middle {
+.__previewbar .container .rows .middle {
   width: 75%;
 }
 .__previewbar .container .row:after {
@@ -607,7 +617,11 @@ button,
   display: block;
 }
 .__previewbar .container .content {
-  padding: 10px;
+  width: 100%;
+  height: 100%;
+  background-color: wheat;
+  color: #fff;
+  overflow: scroll;
 }
 
 /*** __footer **/

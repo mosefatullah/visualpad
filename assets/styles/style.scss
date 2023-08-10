@@ -371,7 +371,7 @@ button,
  .__text-editor {
   position: relative;
   width: 100%;
-  height: calc(100% - 40px);
+  height: calc(100% - 75px) !important;
   overflow: hidden;
   overflow-y: scroll;
   background-image: url(../images/vspad-d.png);
@@ -414,12 +414,15 @@ button,
     width: 100%;
     height: 100%;
     background-color: $primary-color;
-    textarea {
-     width: 100%;
-     height: 100%;
-     padding: 2rem;
-     background-color: $primary-color;
-     color: $primary-text-color;
+    position: relative;
+    .ace_scroller {
+     padding-bottom: 5rem !important;
+    }
+    .ace_gutter-cell {
+     text-align: left;
+    }
+    .ace_fold-widget {
+     float: right;
     }
    }
   }
@@ -463,6 +466,7 @@ button,
   height: 400px;
   overflow: hidden;
   background-color: $primary-color;
+  z-index: 100;
   .tab {
    font-size: 0.7rem;
    user-select: none;
@@ -523,30 +527,36 @@ button,
  background-color: $secondary-color;
  padding: 1rem;
  border-left: 1px solid rgba($primary-text-color, 0.1);
+ z-index: 10000;
+ .btn-primary svg {
+  fill: $primary-text-color;
+ }
  /* The browser window */
  .container {
+  position: relative;
   border: 3px solid #f1f1f1;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   margin-top: 1rem;
+  padding: 0;
   height: 90%;
-  .row {
+  overflow: hidden;
+  user-select: none;
+  .rows {
    padding: 10px;
    background: #f1f1f1;
-   border-top-left-radius: 4px;
-   border-top-right-radius: 4px;
-  }
-  .column {
-   float: left;
-  }
-  .left {
-   width: 15%;
-  }
-  .right {
-   width: 10%;
-  }
-  .middle {
-   width: 75%;
+   .column {
+    float: left;
+   }
+   .left {
+    width: 15%;
+   }
+   .right {
+    width: 10%;
+   }
+   .middle {
+    width: 75%;
+   }
   }
   .row:after {
    content: "";
@@ -579,7 +589,11 @@ button,
    display: block;
   }
   .content {
-   padding: 10px;
+   width: 100%;
+   height: 100%;
+   background-color: wheat;
+   color: $primary-text-color;
+   overflow: scroll;
   }
  }
 }

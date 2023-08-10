@@ -48,6 +48,7 @@ allButtonsOfSidebar.map((b) => {
  });
 });
 
+
 //// BODY
 const closeIndex = document.querySelectorAll(
  ".__body .__top .index:not(.right) span"
@@ -55,6 +56,9 @@ const closeIndex = document.querySelectorAll(
 const pageIndex = document.querySelectorAll(
  ".__body .__top .index:not(.right)"
 );
+
+const previewBox = $(".__previewbar .content");
+const previewCode = $("#example");
 
 $(".__body .__top .welcome").on("click", () => {
  $(".__allPages").hide();
@@ -67,7 +71,6 @@ $(".__body .__top .welcome").on("click", () => {
 
 for (let i = 0; i < pageIndex.length; i++) {
  let c = pageIndex[i];
- console.log(c);
  c.onclick = () => {
   if (c.style.display !== "none") {
    $(".__allPages").show();
@@ -96,6 +99,387 @@ closeIndex.forEach((c) => {
   ].style.display = "none";
  };
 });
+
+var editor = ace.edit("example", {
+ theme: "ace/theme/dracula", // ace/theme/twilight
+ mode: "ace/mode/html",
+ value: `
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Document</title>
+ </head>
+ <body>
+     
+ </body>
+ </html>`,
+});
+
+let changingPreview = () => {
+previewBox.html(editor.getValue());
+};
+changingPreview();
+
+editor.setOption("wrap", 80);
+editor.setOptions({
+ fontFamily: "sans-serif",
+ //fontSize: "10pt",
+ fontSize: 14,
+ showPrintMargin: false,
+ enableSnippets: true,
+ showLineNumbers: true,
+ tabSize: 2,
+ showGutter: true
+});
+editor.getSession().on('change', changingPreview);
+
+// enable autocompletion and snippets
+editor.setOptions({
+ enableBasicAutocompletion: true,
+ enableLiveAutocompletion: true,
+});
+editor.completers = [
+ {
+  getCompletions: function (editor, session, pos, prefix, callback) {
+   var completions = [
+    {
+     caption: "my caption",
+     snippet: "content: '$1'",
+     meta: "snippet",
+     type: "snippet",
+    },
+    {
+     caption: "my value",
+     value: "value",
+     meta: "custom",
+     type: "value",
+    },
+   ];
+   callback(null, completions);
+  },
+  getDocTooltip: function (item) {
+   if (!item.docHTML) {
+    item.docHTML = ["<b>", item.caption, "</b>"].join("");
+   }
+  },
+ },
+];
+
+/* 
+/////////////////////////
+let events = [
+    'blur',
+    'input',
+    'change',
+    'changeSelectionStyle',
+    'changeSession',
+    'copy',
+    'focus',
+    'paste',
+    'mousemove',
+    'mouseup',
+    'mousewheel',
+    'click'
+]
+
+var output = document.getElementById('output');
+function showEvent(str) {
+    while (output.childNodes.length > 50) {
+        output.removeChild(output.firstChild);
+    }
+    output.appendChild(document.createTextNode(str));
+    output.appendChild(document.createElement('br'));
+    output.scrollTop = output.scrollHeight;
+}
+
+for (let event of events) {
+    editor.on(event, () => {
+        showEvent("Editor event: " + event);
+    })
+}
+
+ */
+
+/* var command = {
+    name: "My command",
+    //key or key combination, you could use {mac:"key-combination", win:"key-combination"}
+    //to provide different key combination for mac and win
+    bindKey: "Ctrl-Shift-A",
+    exec: (ace) => {
+        var cursor = ace.getCursorPositionScreen();
+        alert(`My command run at ${cursor.row + 1}: ${cursor.column}`);
+    }
+};
+editor.commands.addCommand(command); */
+
+/* Keyboard Shortcuts
+showSettingsMenu : Ctrl-,
+goToNextError : Alt-E
+goToPreviousError : Alt-Shift-E
+selectall : Ctrl-A
+gotoline : Ctrl-L
+fold : Alt-L|Ctrl-F1
+unfold : Alt-Shift-L|Ctrl-Shift-F1
+toggleFoldWidget : F2
+toggleParentFoldWidget : Alt-F2
+foldOther : Alt-0
+unfoldall : Alt-Shift-0
+findnext : Ctrl-K
+findprevious : Ctrl-Shift-K
+selectOrFindNext : Alt-K
+selectOrFindPrevious : Alt-Shift-K
+find : Ctrl-F
+overwrite : Insert
+selecttostart : Ctrl-Shift-Home
+gotostart : Ctrl-Home
+selectup : Shift-Up
+golineup : Up
+selecttoend : Ctrl-Shift-End
+gotoend : Ctrl-End
+selectdown : Shift-Down
+golinedown : Down
+selectwordleft : Ctrl-Shift-Left
+gotowordleft : Ctrl-Left
+selecttolinestart : Alt-Shift-Left
+gotolinestart : Alt-Left|Home
+selectleft : Shift-Left
+gotoleft : Left
+selectwordright : Ctrl-Shift-Right
+gotowordright : Ctrl-Right
+selecttolineend : Alt-Shift-Right
+gotolineend : Alt-Right|End
+selectright : Shift-Right
+gotoright : Right
+selectpagedown : Shift-Pagedown
+gotopagedown : Pagedown
+selectpageup : Shift-Pageup
+gotopageup : Pageup
+scrollup : Ctrl-Up
+scrolldown : Ctrl-Down
+selectlinestart : Shift-Home
+selectlineend : Shift-End
+togglerecording : Ctrl-Alt-E
+replaymacro : Ctrl-Shift-E
+jumptomatching : Ctrl-\|Ctrl-P
+selecttomatching : Ctrl-Shift-\|Ctrl-Shift-P
+expandToMatching : Ctrl-Shift-M
+removeline : Ctrl-D
+duplicateSelection : Ctrl-Shift-D
+sortlines : Ctrl-Alt-S
+togglecomment : Ctrl-/
+toggleBlockComment : Ctrl-Shift-/
+modifyNumberUp : Ctrl-Shift-Up
+modifyNumberDown : Ctrl-Shift-Down
+replace : Ctrl-H
+undo : Ctrl-Z
+redo : Ctrl-Shift-Z|Ctrl-Y
+copylinesup : Alt-Shift-Up
+movelinesup : Alt-Up
+copylinesdown : Alt-Shift-Down
+movelinesdown : Alt-Down
+del : Delete
+backspace : Shift-Backspace|Backspace
+cut_or_delete : Shift-Delete
+removetolinestart : Alt-Backspace
+removetolineend : Alt-Delete
+removetolinestarthard : Ctrl-Shift-Backspace
+removetolineendhard : Ctrl-Shift-Delete
+removewordleft : Ctrl-Backspace
+removewordright : Ctrl-Delete
+outdent : Shift-Tab
+indent : Tab
+blockoutdent : Ctrl-[
+blockindent : Ctrl-]
+transposeletters : Alt-Shift-X
+touppercase : Ctrl-U
+tolowercase : Ctrl-Shift-U
+expandtoline : Ctrl-Shift-L
+openlink : Ctrl-F3
+openCommandPallete : F1
+addCursorAbove : Ctrl-Alt-Up
+addCursorBelow : Ctrl-Alt-Down
+addCursorAboveSkipCurrent : Ctrl-Alt-Shift-Up
+addCursorBelowSkipCurrent : Ctrl-Alt-Shift-Down
+selectMoreBefore : Ctrl-Alt-Left
+selectMoreAfter : Ctrl-Alt-Right
+selectNextBefore : Ctrl-Alt-Shift-Left
+selectNextAfter : Ctrl-Alt-Shift-Right
+toggleSplitSelectionIntoLines : Ctrl-Alt-L
+alignCursors : Ctrl-Alt-A
+findAll : Ctrl-Alt-K
+showKeyboardShortcuts : Ctrl-Alt-H */
+
+/*
+var buildDom = require("ace/lib/dom").buildDom;
+var editor = ace.edit();
+editor.setOptions({
+    theme: "ace/theme/tomorrow_night_eighties",
+    mode: "ace/mode/markdown",
+    maxLines: 30,
+    minLines: 30,
+    autoScrollEditorIntoView: true
+});
+var refs = {};
+
+function updateToolbar() {
+    refs.saveButton.disabled = editor.session.getUndoManager().isClean();
+    refs.undoButton.disabled = !editor.session.getUndoManager().hasUndo();
+    refs.redoButton.disabled = !editor.session.getUndoManager().hasRedo();
+}
+
+editor.on("input", updateToolbar);
+editor.session.setValue(localStorage.savedValue || "Welcome to ace Toolbar demo!");
+
+function save() {
+    localStorage.savedValue = editor.getValue();
+    editor.session.getUndoManager().markClean();
+    updateToolbar();
+}
+
+editor.commands.addCommand({
+    name: "save",
+    exec: save,
+    bindKey: {
+        win: "ctrl-s",
+        mac: "cmd-s"
+    }
+});
+
+buildDom([
+    "div", {class: "toolbar"}, [
+        "button", {
+            ref: "saveButton",
+            onclick: save
+        }, "save"
+    ], [
+        "button", {
+            ref: "undoButton",
+            onclick: function () {
+                editor.undo();
+            }
+        }, "undo"
+    ], [
+        "button", {
+            ref: "redoButton",
+            onclick: function () {
+                editor.redo();
+            }
+        }, "redo"
+    ], [
+        "button", {
+            style: "font-weight: bold",
+            onclick: function () {
+                editor.insertSnippet("**${1:$SELECTION}**");
+                editor.renderer.scrollCursorIntoView();
+            }
+        }, "bold"
+    ], [
+        "button", {
+            style: "font-style: italic",
+            onclick: function () {
+                editor.insertSnippet("*${1:$SELECTION}*");
+                editor.renderer.scrollCursorIntoView();
+            }
+        }, "Italic"
+    ]
+], document.body, refs);
+document.body.appendChild(editor.container);
+
+window.editor = editor;
+<!-- load ace language tools -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.17.0/ext-language_tools.min.js"></script>
+*/
+
+/*
+//samples/settings menu
+
+var editor = ace.edit("editor");
+ace.require('ace/ext/settings_menu').init(editor);
+editor.setTheme("ace/theme/twilight");
+editor.session.setMode("ace/mode/html");
+editor.commands.addCommands([
+    {
+        name: "showSettingsMenu",
+        bindKey: {
+            win: "Ctrl-q",
+            mac: "Ctrl-q"
+        },
+        exec: function (editor) {
+            editor.showSettingsMenu();
+        },
+        readOnly: true
+    }
+]);
+editor.showSettingsMenu();
+
+//Try to use `Ctrl+Q` for menu to appear
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.17.0/ext-settings_menu.min.js"></script>
+*/
+
+/*
+//samples/custom completions
+
+var editor = ace.edit("example");
+editor.session.setMode("ace/mode/html");
+editor.setTheme("ace/theme/tomorrow");
+
+// enable autocompletion and snippets
+editor.setOptions({
+    enableBasicAutocompletion: true,
+    enableLiveAutocompletion: true
+});
+editor.completers = [{
+    getCompletions: function(editor, session, pos, prefix, callback) {
+        var completions = [
+            {
+                caption: "my caption",
+                snippet: "content: '$1'",
+                meta: "snippet",
+                type: "snippet"
+            }, {
+                caption: "my value",
+                value: "value",
+                meta: "custom",
+                type: "value"
+            }
+        ];
+        callback(null, completions);
+    },
+    getDocTooltip: function(item) {
+        if (!item.docHTML) {
+            item.docHTML = [
+                "<b>", item.caption, "</b>",
+            ].join("");
+        }
+    }
+}];
+
+//Try to write something in Result tab->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.17.0/ext-language_tools.min.js"></script>
+*/
+
+/*
+//samples/autocompletion
+
+// trigger extension
+ace.require("ace/ext/language_tools");
+var editor = ace.edit("example");
+editor.session.setMode("ace/mode/html");
+editor.setTheme("ace/theme/tomorrow");
+// enable autocompletion and snippets
+editor.setOptions({
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: true
+});
+
+//Try to write something in Result tab->
+<!-- load ace language tools -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.17.0/ext-language_tools.min.js"></script>
+*/
+
 
 //// FLOATBOTTOM
 
