@@ -1,38 +1,25 @@
 //// GLOBAL
 const previewBox = $(".__previewbar .content");
 const previewCode = $("#vspad-code-editor");
+//
 const allPages = document.querySelectorAll(".__allPages")[0];
 let activePage = {};
 let editorCurrent;
-
+//
+let files = [];
+//
 const tooltipTriggerList = document.querySelectorAll(
  '[data-bs-toggle="tooltip"]'
 );
 const tooltipList = [...tooltipTriggerList].map(
  (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
 );
-
+//
 const notifyAlerts = document.querySelectorAll(".notifyAlert");
 notifyAlerts.forEach((i) => {
  bootstrap.Toast.getOrCreateInstance(i).show();
 });
-
-let funcOfActiveEditor = (f) => {
- $(".vspad-code-editor").each(function (index) {
-  if (
-   document
-    .querySelectorAll(".vspad-code-editor")
-    [index].parentNode.getAttribute("index") == activePage.index &&
-   document
-    .querySelectorAll(".vspad-code-editor")
-    [index].parentNode.getAttribute("name") == activePage.name
-  ) {
-   editorCurrent = ace.edit(this);
-   if (f) f();
-  }
- });
-};
-
+//
 let themes = [
  "twilight",
  "tomorrow",
@@ -50,7 +37,6 @@ let themes = [
  "vibrant_ink",
  "ambiance",
 ];
-
 let modes = [
  "html",
  "css",
@@ -85,7 +71,6 @@ let modes = [
  "yaml",
  "handlebars",
 ];
-
 let snippetsFirst = {
  html: `<!DOCTYPE html>
     <html lang="en">
@@ -117,7 +102,15 @@ snippetsFirst.scss = snippetsFirst.css;
 snippetsFirst.less = snippetsFirst.css;
 snippetsFirst.sass = snippetsFirst.css;
 
-//- CONFIG CODE EDITOR
+////
+////
+////
+////
+////
+////
+////
+////
+//// CONFIG CODE EDITOR
 let editorConfig = (elm, func, opt) => {
  let snippetVar, modeVar;
 
@@ -200,6 +193,14 @@ let editorConfig = (elm, func, opt) => {
  ]);
 };
 
+////
+////
+////
+////
+////
+////
+////
+////
 //// SIDEBAR
 let settingFlag = false;
 let profileFlag = false;
@@ -285,6 +286,32 @@ searchClear.on("click", () => {
  searchPrevBtn.attr("disabled", "disabled");
 });
 
+
+//- Search Replace Action
+searchReplaceBtn.on("click", () => {
+    if (editorCurrent) {
+        editorCurrent.replace(searchReplace.val());
+    }
+});
+searchReplaceAllBtn.on("click", () => {
+    if (editorCurrent) {
+        editorCurrent.replaceAll(searchInput.val(), searchReplace.val());
+    }
+});
+
+//- File Explorer
+let fileExplorer = () => {
+    
+};
+
+////
+////
+////
+////
+////
+////
+////
+////
 //// BODY
 const allPagesIndex = $(".__body .__top .__allPagesIndex");
 let isAllClose = true;
@@ -362,9 +389,22 @@ allPages.querySelectorAll(".page").forEach((p) => {
             </span>
         </div>
 `);
+ files.push({
+  name: p.getAttribute("name"),
+  index: p.getAttribute("index"),
+  page: p.querySelector(".vspad-code-editor")
+ });
  funcOfOther();
 });
 
+////
+////
+////
+////
+////
+////
+////
+////
 //// FLOATBOTTOM
 
 const allButtonsOfFloatbottom = ["terminal", "console", "logs"];
@@ -406,7 +446,14 @@ $(".__terminal").terminal(
 $(".__floatBottom").on("resize", () => {
  alert("hi");
 });
-
+////
+////
+////
+////
+////
+////
+////
+////
 //// FOOTER
 
 $(".__footer .terminal").on("click", () => {
