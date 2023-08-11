@@ -214,6 +214,7 @@ const allButtonsOfSidebar = [
 const allSystemButtonsOfSidebar = [".menu", ".profile", ".setting"];
 const searchInput = $(".search-section .__search-input");
 const searchReplace = $(".search-section .__search-input-replace");
+const searchBtn = $(".search-section .__search");
 const searchReplaceBtn = $(".search-section .__replace");
 const searchReplaceAllBtn = $(".search-section .__replace-all");
 const searchPrevBtn = $(".search-section .__prev");
@@ -252,31 +253,41 @@ allButtonsOfSidebar.map((b) => {
 });
 
 //- Search Action
-searchInput.on("input", () => {
- if (editorCurrent) {
-  let count = editorCurrent.findAll(searchInput.val(), {
-   backwards: false,
-   wrap: true,
-   caseSensitive: false,
-   wholeWord: false,
-   regExp: false,
-  });
-  $(".search-section .input-group p").html(count + " results");
- }
- if (searchInput.val().length === 0) {
-  searchNextBtn.attr("disabled", "disabled");
-  searchPrevBtn.attr("disabled", "disabled");
- } else {
-  searchNextBtn.removeAttr("disabled");
-  searchPrevBtn.removeAttr("disabled");
- }
-});
+var searchOptions = {
+ wrap: true,
+ caseSensitive: false,
+ wholeWord: false,
+ regExp: false,
+};
+var searchingOnPage = () => {
+    if (editorCurrent) {
+        let count = editorCurrent.findAll(searchInput.val(), {
+         backwards: false,
+         wrap: true,
+         caseSensitive: false,
+         wholeWord: false,
+         regExp: false,
+        });
+        $(".search-section .input-group p").html(count + " results");
+       }
+       if (searchInput.val().length === 0) {
+        searchNextBtn.attr("disabled", "disabled");
+        searchPrevBtn.attr("disabled", "disabled");
+       } else {
+        searchNextBtn.removeAttr("disabled");
+        searchPrevBtn.removeAttr("disabled");
+       }
+};
+searchInput.on("input", searchingOnPage);
+searchBtn.on("click", searchingOnPage);
+
 searchPrevBtn.on("click", () => {
  if (editorCurrent) editorCurrent.findPrevious();
 });
 searchNextBtn.on("click", () => {
  if (editorCurrent) editorCurrent.findNext();
 });
+
 searchClear.on("click", () => {
  searchInput.val("");
  searchReplace.val("");
@@ -286,23 +297,25 @@ searchClear.on("click", () => {
  searchPrevBtn.attr("disabled", "disabled");
 });
 
-
-//- Search Replace Action
-searchReplaceBtn.on("click", () => {
-    if (editorCurrent) {
-        editorCurrent.replace(searchReplace.val());
-    }
+searchReplaceBtn.on("click", function () {
+ if (editorCurrent) {
+  editorCurrent.replace(searchReplace.val());
+  searchOptions.needle = searchReplace.val();
+ }
 });
-searchReplaceAllBtn.on("click", () => {
-    if (editorCurrent) {
-        editorCurrent.replaceAll(searchInput.val(), searchReplace.val());
-    }
+
+searchReplaceAllBtn.on("click", function () {
+ if (editorCurrent) {
+  var searchText = searchInput.val();
+  var replaceText = searchReplace.val();
+  searchOptions.needle = searchText;
+  editorCurrent.replaceAll(replaceText, searchOptions);
+  $(".search-section .input-group p").html("0 results");
+ }
 });
 
 //- File Explorer
-let fileExplorer = () => {
-    
-};
+let fileExplorer = () => {};
 
 ////
 ////
@@ -392,7 +405,7 @@ allPages.querySelectorAll(".page").forEach((p) => {
  files.push({
   name: p.getAttribute("name"),
   index: p.getAttribute("index"),
-  page: p.querySelector(".vspad-code-editor")
+  page: p.querySelector(".vspad-code-editor"),
  });
  funcOfOther();
 });
