@@ -267,11 +267,19 @@ button,
 }
 .__sidepanel .search-section .content .input-group {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
   padding: 0.5rem 0;
+}
+.__sidepanel .search-section .content .input-group p {
+  font-size: 0.65rem;
 }
 .__sidepanel .search-section .content button {
   padding: 0.2rem 0.4rem;
   font-size: 0.6rem;
+}
+.__sidepanel .search-section .content [disabled=disabled] {
+  background-color: rgba(0, 150, 255, 0.8) !important;
 }
 .__sidepanel .search-section .content .output {
   margin: 1rem 0;

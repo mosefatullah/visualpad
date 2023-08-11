@@ -198,12 +198,15 @@
                 <div class="content p-3">
                     <input class="__search-input" type="search" name="Search" placeholder="Search">
                     <input class="__search-input-replace" type="search" name="Search" placeholder="Replace">
-                    <div class="input-groups pt-3 pb-4">
+                    <div class="input-groups pt-3 pb-4 d-flex flex-column row-gap-2">
                         <button class="btn btn-primary __replace">Replace</button>
                         <button class="btn btn-primary __replace-all">Replace All</button>
-                        <button class="btn btn-primary __prev">Prev</button>
-                        <button class="btn btn-primary __next">Next</button>
                         <button class="btn btn-primary __clear">Clear</button>
+                        <div class="input-group">
+                            <button class="btn btn-primary __prev" disabled="disabled">Prev</button>
+                            <p>0 results</p>
+                            <button class="btn btn-primary __next" disabled="disabled">Next</button>
+                        </div>
                     </div>
                     <div class="output">
                         <p>3 results in 1 file</p>
@@ -384,7 +387,7 @@
                 <div class="__allPagesIndex d-flex">
 
                 </div>
-               
+
                 <div class="d-flex ms-auto">
                     <div class="index right welcome">
                         <p>Welcome</p>
@@ -468,7 +471,6 @@
             </div>
 
             <div class="toast-container position-fixed bottom-0 end-0 m-1 my-4 p-3 pb-4">
-
                 <div class="notifyAlert toast rounded-0 shadow-none" role="alert" aria-live="assertive"
                     aria-atomic="true" data-bs-autohide="false">
                     <div class="toast-body">
@@ -489,33 +491,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- <div class="notifyAlert toast rounded-0 shadow-none" role="alert" aria-live="assertive"
-                    aria-atomic="true" data-bs-autohide="false">
-                    <div class="toast-body">
-                        <div class="d-flex">
-                            <strong class="me-2"><svg xmlns="http://www.w3.org/2000/svg" height="22"
-                                    viewBox="0 -960 960 960" width="22">
-                                    <path
-                                        d="M453-280h60v-240h-60v240Zm26.982-314q14.018 0 23.518-9.2T513-626q0-14.45-9.482-24.225-9.483-9.775-23.5-9.775-14.018 0-23.518 9.775T447-626q0 13.6 9.482 22.8 9.483 9.2 23.5 9.2Zm.284 514q-82.734 0-155.5-31.5t-127.266-86q-54.5-54.5-86-127.341Q80-397.681 80-480.5q0-82.819 31.5-155.659Q143-709 197.5-763t127.341-85.5Q397.681-880 480.5-880q82.819 0 155.659 31.5Q709-817 763-763t85.5 127Q880-563 880-480.266q0 82.734-31.5 155.5T763-197.684q-54 54.316-127 86Q563-80 480.266-80Zm.234-60Q622-140 721-239.5t99-241Q820-622 721.188-721 622.375-820 480-820q-141 0-240.5 98.812Q140-622.375 140-480q0 141 99.5 240.5t241 99.5Zm-.5-340Z" />
-                                </svg></strong>
-                            <p>Do you want to install the recommended 'Python' extension from Microsoft for Python
-                                language?
-                            </p>
-                            <span data-bs-dismiss="toast"><svg xmlns="http://www.w3.org/2000/svg" height="17"
-                                    viewBox="0 -960 960 960" width="17">
-                                    <path
-                                        d="m249-207-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
-                                </svg></span>
-                        </div>
-
-                        <div class="d-flex pt-3 gap-2">
-                            <button class="btn btn-primary btn-sm">Install</button>
-                            <button class="btn btn-primary btn-sm">Show recommendations</button>
-                        </div>
-                    </div>
-                </div> -->
-
             </div>
 
             <div class="__floatbottom" style="display: none;">
@@ -638,7 +613,7 @@
                     HTML
                 </div>
                 <div class="button colrow-btn" data-bs-toggle="tooltip" data-bs-title="Go to Line/Column">
-                    Ln 550, Col 56
+                    Ln 0, Col 0
                 </div>
                 <div class="button" data-bs-toggle="tooltip" data-bs-title="Select Encoding">
                     UTF-8

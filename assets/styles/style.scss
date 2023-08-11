@@ -223,11 +223,19 @@ button,
    }
    .input-group {
     width: 100%;
+    display: flex;
+    justify-content: space-between;
     padding: 0.5rem 0;
+    p{
+        font-size: 0.65rem;
+    }
    }
    button {
     padding: 0.2rem 0.4rem;
     font-size: 0.6rem;
+   }
+   [disabled="disabled"] {
+    background-color: rgba($special-color, 0.8) !important;
    }
    .output {
     margin: 1rem 0;
