@@ -371,7 +371,7 @@ button,
  .__text-editor {
   position: relative;
   width: 100%;
-  height: calc(100% - 75px) !important;
+  height: calc(100% - 70px) !important;
   overflow: hidden;
   overflow-y: scroll;
   background-image: url(../images/vspad-d.png);
@@ -416,7 +416,7 @@ button,
     background-color: $primary-color;
     position: relative;
     .ace_scroller {
-     padding-bottom: 5rem !important;
+     padding-bottom: 10rem;
     }
     .ace_gutter-cell {
      text-align: left;
@@ -613,6 +613,7 @@ button,
  position: fixed;
  bottom: 0;
  left: 0;
+ z-index: 100000;
  .button {
   padding: 0.1rem 0.7rem;
   font-size: 0.7rem;

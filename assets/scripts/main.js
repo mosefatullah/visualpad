@@ -1,4 +1,7 @@
 //// GLOBAL
+const previewBox = $(".__previewbar .content");
+const previewCode = $("#vspad-code-editor");
+const allPages = document.querySelectorAll(".__allPages")[0];
 
 const tooltipTriggerList = document.querySelectorAll(
  '[data-bs-toggle="tooltip"]'
@@ -10,99 +13,6 @@ const tooltipList = [...tooltipTriggerList].map(
 const notifyAlerts = document.querySelectorAll(".notifyAlert");
 notifyAlerts.forEach((i) => {
  bootstrap.Toast.getOrCreateInstance(i).show();
-});
-
-//// SIDEBAR
-let settingFlag = false;
-let profileFlag = false;
-
-$(".__sidebar .setting").on("click", () => {
- $(".__setting-canvas").show();
- settingFlag = true;
-});
-$(".__sidebar .profile").on("click", () => {
- $(".__profile-canvas").show();
- profileFlag = true;
-});
-
-const allButtonsOfSidebar = [
- ".explorer",
- ".search",
- ".source",
- ".project",
- ".extension",
-];
-const allSystemButtonsOfSidebar = [".menu", ".profile", ".setting"];
-
-allButtonsOfSidebar.map((b) => {
- let button = $(".__sidebar " + b),
-  container = $(".__sidepanel " + b + "-section");
-
- button.on("click", () => {
-  if (button.hasClass("active")) {
-   button.removeClass("active");
-   container.parent().hide();
-  } else {
-   allButtonsOfSidebar.map((c) => {
-    $(".__sidebar " + c).removeClass("active");
-    $(".__sidepanel " + c + "-section").hide();
-   });
-   button.addClass("active");
-   container.parent().show();
-   container.show();
-  }
- });
-});
-
-//// BODY
-const closeIndex = document.querySelectorAll(
- ".__body .__top .index:not(.right) span"
-);
-const pageIndex = document.querySelectorAll(
- ".__body .__top .index:not(.right)"
-);
-
-const previewBox = $(".__previewbar .content");
-const previewCode = $("#vspad-code-editor");
-
-$(".__body .__top .welcome").on("click", () => {
- $(".__allPages").hide();
- pageIndex.forEach((k) => {
-  k.classList.remove("active");
- });
- $(".__body .__top .welcome").addClass("active");
- $(".__welcome-page").show();
-});
-
-for (let i = 0; i < pageIndex.length; i++) {
- let c = pageIndex[i];
- c.onclick = () => {
-  if (c.style.display !== "none") {
-   $(".__allPages").show();
-   pageIndex.forEach((k) => {
-    k.classList.remove("active");
-   });
-   c.classList.add("active");
-   $(".__body .__top .welcome").removeClass("active");
-   $(".__welcome-page").hide();
-   document.querySelectorAll(".__allPages .page").forEach((d) => {
-    d.style.display = "none";
-   });
-   document.querySelectorAll(".__allPages .page")[
-    c.getAttribute("index")
-   ].style.display = "block";
-  }
- };
-}
-
-let isAllClose = true;
-closeIndex.forEach((c) => {
- c.onclick = () => {
-  c.parentNode.style.display = "none";
-  document.querySelectorAll(".__allPages .page")[
-   c.parentNode.getAttribute("index")
-  ].style.display = "none";
- };
 });
 
 let themes = [
@@ -158,94 +68,269 @@ let modes = [
  "handlebars",
 ];
 
+let snippetsFirst = {
+ html: `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+    <h2>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Harum placeat, magni, iusto nesciunt fuga, recusandae perferendis repudiandae voluptates ratione vero quasi dolorum corporis accusantium rem in ab! Dolorem, et dolorum!</h2>
+    <br>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis sequi commodi illo illum expedita eaque possimus nostrum voluptatum doloribus voluptas? Molestias recusandae ex cumque rem laboriosam laudantium perferendis, quaerat corporis modi soluta veniam asperiores ab sapiente aperiam deserunt inventore facilis quisquam autem. Sint officia animi nam excepturi rerum nemo consequuntur dolores necessitatibus ad cupiditate odio doloremque recusandae perspiciatis voluptatum ea omnis, quas porro tenetur neque! Alias quae ex veritatis</p>
+    </body>
+    </html>`,
+ css: `/* This is a single-line comment */
+
+    body {
+        margin: 0;
+        background-color: white;
+    }
+    `,
+ javascript: `let functionName = (a, b) => {
+        console.log(a + b)
+    }
+    functionName(5, 6)
+    `,
+};
+snippetsFirst.scss=snippetsFirst.css;
+snippetsFirst.less=snippetsFirst.css;
+snippetsFirst.sass=snippetsFirst.css;
+
 // CONFIG CODE EDITOR
-let editor = ace.edit("vspad-code-editor", {
- value: `
- <!DOCTYPE html>
- <html lang="en">
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Document</title>
- </head>
- <body>
- <h2>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Harum placeat, magni, iusto nesciunt fuga, recusandae perferendis repudiandae voluptates ratione vero quasi dolorum corporis accusantium rem in ab! Dolorem, et dolorum!</h2>
- <br>
- <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis sequi commodi illo illum expedita eaque possimus nostrum voluptatum doloribus voluptas? Molestias recusandae ex cumque rem laboriosam laudantium perferendis, quaerat corporis modi soluta veniam asperiores ab sapiente aperiam deserunt inventore facilis quisquam autem. Sint officia animi nam excepturi rerum nemo consequuntur dolores necessitatibus ad cupiditate odio doloremque recusandae perspiciatis voluptatum ea omnis, quas porro tenetur neque! Alias quae ex veritatis</p>
- </body>
- </html>`,
-});
+$(".vspad-code-editor").each(function (index) {
+ let snippetVar, modeVar;
 
-// THEME & LANGUAGE
-editor.session.setMode("ace/mode/html");
-editor.setTheme("ace/theme/" + themes[8]);
+ modes.forEach((m) => {
+  if (
+   document
+    .querySelectorAll(".vspad-code-editor")
+    [index].parentNode.getAttribute("modes")
+    .toLowerCase()
+    .trim() == m
+  ) {
+   snippetVar = snippetsFirst[m];
+   modeVar = m;
+  }
+ });
 
-// STYLES & OPTIONS
-editor.container.style.lineHeight = "1.5rem";
-editor.container.style.fontWeight = "400";
-editor.container.style.letterSpacing = "0rem";
+ let editor = ace.edit(this, {
+  value: snippetVar,
+ });
 
-editor.setOptions({
- fontFamily: "monospace",
- fontSize: 16,
- showPrintMargin: false,
- enableSnippets: true,
- showLineNumbers: true,
- tabSize: 2,
- showGutter: true,
- wrap: true,
- scrollSpeed: 1.5,
-});
+ // THEME & LANGUAGE
+ editor.session.setMode("ace/mode/" + modeVar);
+ editor.setTheme("ace/theme/" + themes[2]);
 
-// TOOLS
-editor.setOptions({
- enableBasicAutocompletion: true,
- enableLiveAutocompletion: true,
-});
+ // STYLES & OPTIONS
+ editor.container.style.lineHeight = "1.5rem";
+ editor.container.style.fontWeight = "400";
+ editor.container.style.letterSpacing = "0rem";
 
-editor.setReadOnly(false);
+ editor.setOptions({
+  fontFamily: "monospace",
+  fontSize: 16,
+  showPrintMargin: false,
+  enableSnippets: true,
+  showLineNumbers: true,
+  tabSize: 2,
+  showGutter: true,
+  wrap: true,
+  scrollSpeed: 1.5,
+ });
 
-// SELECTION & PREVIEW
+ // TOOLS
+ editor.setOptions({
+  enableBasicAutocompletion: true,
+  enableLiveAutocompletion: true,
+ });
 
-let changingPreview = () => {
- let colrow = editor.selection.getCursor();
- previewBox.html(editor.getValue());
- $(".__footer .colrow-btn").html("Ln " + colrow.row + ", Col " + colrow.column);
-};
-let changingCursor = () => {
- let colrow = editor.selection.getCursor();
- previewBox.html(editor.getValue());
- $(".__footer .colrow-btn").html("Ln " + colrow.row + ", Col " + colrow.column);
-};
-changingPreview();
-changingCursor();
+ editor.setReadOnly(false);
+ editor.renderer.setScrollMargin(0, 200);
 
-editor.session.on("change", changingPreview);
-editor.session.selection.on("changeCursor", changingCursor);
+ // SELECTION & PREVIEW
+ let changingPreview = () => {
+  let colrow = editor.selection.getCursor();
+  previewBox.html(editor.getValue());
+  $(".__footer .colrow-btn").html(
+   "Ln " + colrow.row + ", Col " + colrow.column
+  );
+ };
 
-// COMMANDS
-editor.commands.addCommands([
- {
-  name: "Comment-out",
-  bindKey: { win: "Ctrl-O", mac: "Command-O" },
-  exec: function (editor) {
-   editor.toggleCommentLines();
+ let changingCursor = () => {
+  let colrow = editor.selection.getCursor();
+  previewBox.html(editor.getValue());
+  $(".__footer .colrow-btn").html(
+   "Ln " + colrow.row + ", Col " + colrow.column
+  );
+ };
+
+ changingPreview();
+ changingCursor();
+
+ editor.session.on("change", changingPreview);
+ editor.session.selection.on("changeCursor", changingCursor);
+
+ // COMMANDS
+ editor.commands.addCommands([
+  {
+   name: "Comment-out",
+   bindKey: { win: "Ctrl-O", mac: "Command-O" },
+   exec: function (editor) {
+    editor.toggleCommentLines();
+   },
   },
- },
-]);
-
-// FIND
-
-editor.find("lorem", {
- backwards: false,
- wrap: false,
- caseSensitive: false,
- wholeWord: false,
- regExp: false,
+ ]);
 });
-// editor.findNext();
-// editor.findPrevious();
 
+//// SIDEBAR
+let settingFlag = false;
+let profileFlag = false;
+const allButtonsOfSidebar = [
+ ".explorer",
+ ".search",
+ ".source",
+ ".project",
+ ".extension",
+];
+const allSystemButtonsOfSidebar = [".menu", ".profile", ".setting"];
+const searchInput = $(".search-section .__search-input");
+const searchReplace = $(".search-section .__search-input-replace");
+const searchReplaceBtn = $(".search-section .__replace");
+const searchReplaceAllBtn = $(".search-section .__replace-all");
+const searchPrevBtn = $(".search-section .__prev");
+const searchNextBtn = $(".search-section .__next");
+const searchClear = $(".search-section .__clear");
+
+//- Setting Toggle
+$(".__sidebar .setting").on("click", () => {
+ $(".__setting-canvas").show();
+ settingFlag = true;
+});
+$(".__sidebar .profile").on("click", () => {
+ $(".__profile-canvas").show();
+ profileFlag = true;
+});
+
+//- Sidebar Buttons
+allButtonsOfSidebar.map((b) => {
+ let button = $(".__sidebar " + b),
+  container = $(".__sidepanel " + b + "-section");
+
+ button.on("click", () => {
+  if (button.hasClass("active")) {
+   button.removeClass("active");
+   container.parent().hide();
+  } else {
+   allButtonsOfSidebar.map((c) => {
+    $(".__sidebar " + c).removeClass("active");
+    $(".__sidepanel " + c + "-section").hide();
+   });
+   button.addClass("active");
+   container.parent().show();
+   container.show();
+  }
+ });
+});
+
+//- Search Action
+searchInput.on("input", () => {
+ editor.find(searchInput.val(), {
+  backwards: false,
+  wrap: true,
+  caseSensitive: false,
+  wholeWord: false,
+  regExp: false,
+ });
+});
+searchPrevBtn.on("click", () => {
+ editor.findPrevious();
+});
+searchNextBtn.on("click", () => {
+ editor.findNext();
+});
+searchClear.on("click", () => {
+ searchInput.val("");
+ searchReplace.val("");
+});
+
+//// BODY
+const allPagesIndex = $(".__body .__top .__allPagesIndex");
+let isAllClose = true;
+
+//- Index Action
+let funcOfOther = () => {
+ const closeIndex = document.querySelectorAll(
+  ".__body .__top .__allPagesIndex .index span"
+ );
+ const pageIndex = document.querySelectorAll(
+  ".__body .__top .__allPagesIndex .index"
+ );
+
+ $(".__body .__top .welcome").on("click", () => {
+  $(".__allPages").hide();
+  pageIndex.forEach((k) => {
+   k.classList.remove("active");
+  });
+  $(".__body .__top .welcome").addClass("active");
+  $(".__welcome-page").show();
+ });
+
+ for (let i = 0; i < pageIndex.length; i++) {
+  let c = pageIndex[i];
+  c.onclick = () => {
+   if (c.style.display !== "none") {
+    $(".__allPages").show();
+    pageIndex.forEach((k) => {
+     k.classList.remove("active");
+    });
+    c.classList.add("active");
+    $(".__body .__top .welcome").removeClass("active");
+    $(".__welcome-page").hide();
+    document.querySelectorAll(".__allPages .page").forEach((d) => {
+     d.style.display = "none";
+     if (d.getAttribute("index") === c.getAttribute("index")) {
+      if (d.getAttribute("name") === c.querySelectorAll("p")[0].innerHTML) {
+       d.style.display = "block";
+       editor.session.setMode("ace/mode/" + modeVar);
+      }
+     }
+    });
+   }
+  };
+ }
+ //- Index Closing
+ closeIndex.forEach((c) => {
+  c.onclick = () => {
+   c.parentNode.style.display = "none";
+   document.querySelectorAll(".__allPages .page").forEach((d) => {
+    if (d.getAttribute("index") === c.parentNode.getAttribute("index")) {
+     if (
+      d.getAttribute("name") === c.parentNode.querySelectorAll("p")[0].innerHTML
+     ) {
+      d.style.display = "none";
+     }
+    }
+   });
+  };
+ });
+};
+
+allPages.querySelectorAll(".page").forEach((p) => {
+ allPagesIndex.append(`<div class="index" index="${p.getAttribute("index")}">
+            <p>${p.getAttribute("name")}</p>
+            <span data-bs-toggle="tooltip" data-bs-title="Close">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="17" viewBox="0 -960 960 960" width="17">
+                        <path d="m249-207-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
+                  </svg>
+            </span>
+        </div>
+`);
+ funcOfOther();
+});
+/*
 editor.completers = [
  {
   getCompletions: function (editor, session, pos, prefix, callback) {
@@ -273,7 +358,7 @@ editor.completers = [
  },
 ];
 
-/* 
+ 
 /////////////////////////
 let events = [
     'blur',

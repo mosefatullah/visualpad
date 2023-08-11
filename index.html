@@ -196,12 +196,14 @@
                     </div>
                 </div>
                 <div class="content p-3">
-                    <input class="" type="search" name="Search" id="search" placeholder="Search">
-                    <input class="" type="search" name="Search" id="search" placeholder="Replace">
-                    <div class="input-group">
-                        <button class="btn btn-primary">Replace</button>
-                        <button class="btn btn-primary">Replace All</button>
-                        <button class="btn btn-primary">Close</button>
+                    <input class="__search-input" type="search" name="Search" placeholder="Search">
+                    <input class="__search-input-replace" type="search" name="Search" placeholder="Replace">
+                    <div class="input-groups pt-3 pb-4">
+                        <button class="btn btn-primary __replace">Replace</button>
+                        <button class="btn btn-primary __replace-all">Replace All</button>
+                        <button class="btn btn-primary __prev">Prev</button>
+                        <button class="btn btn-primary __next">Next</button>
+                        <button class="btn btn-primary __clear">Clear</button>
                     </div>
                     <div class="output">
                         <p>3 results in 1 file</p>
@@ -379,38 +381,10 @@
         <!-- __BODY -->
         <div class="__body">
             <div class="__top">
-                <div class="index" index="1">
-                    <p>style.scss</p>
-                    <span data-bs-toggle="tooltip" data-bs-title="Close"><svg xmlns="http://www.w3.org/2000/svg"
-                            height="17" viewBox="0 -960 960 960" width="17">
-                            <path
-                                d="m249-207-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
-                        </svg></span>
+                <div class="__allPagesIndex d-flex">
+
                 </div>
-                <div class="index active" index="0">
-                    <p>index.html</p>
-                    <span data-bs-toggle="tooltip" data-bs-title="Close"><svg xmlns="http://www.w3.org/2000/svg"
-                            height="17" viewBox="0 -960 960 960" width="17">
-                            <path
-                                d="m249-207-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
-                        </svg></span>
-                </div>
-                <div class="index" index="3">
-                    <p>index.html</p>
-                    <span data-bs-toggle="tooltip" data-bs-title="Close"><svg xmlns="http://www.w3.org/2000/svg"
-                            height="17" viewBox="0 -960 960 960" width="17">
-                            <path
-                                d="m249-207-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
-                        </svg></span>
-                </div>
-                <div class="index" index="2">
-                    <p>style.css</p>
-                    <span data-bs-toggle="tooltip" data-bs-title="Close"><svg xmlns="http://www.w3.org/2000/svg"
-                            height="17" viewBox="0 -960 960 960" width="17">
-                            <path
-                                d="m249-207-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
-                        </svg></span>
-                </div>
+               
                 <div class="d-flex ms-auto">
                     <div class="index right welcome">
                         <p>Welcome</p>
@@ -439,8 +413,7 @@
 
             </div>
             <div class="__text-editor">
-                <div class="__welcome-page p-5" style="display: none;">
-
+                <div class="__welcome-page p-5">
                     <div class="container">
                         <div class="row">
                             <div class="col-12 col-md-6">
@@ -476,25 +449,25 @@
                     </div>
                 </div>
                 <div class="__allPages">
-                    <div class="page" name="1-index.html">
-                        <div id='vspad-code-editor' style="height: 100%;"></div>
-                        <!-- I have two option : CodeMirror [vscode like] or ACE Editor  -->
-                        <!-- Learn more : https://dev.to/dhairyashah/how-i-made-my-own-text-editor-2aj8 -->
+                    <div class="page" name="index.html" index="0" modes="html" style="display: none;">
+                        <div class='vspad-code-editor' style="height: 100%;"></div>
                     </div>
-                    <div class="page" name="1-style.scss" style="display: none;">
+                    <div class="page" name="style.scss" index="0" modes="scss" style="display: none;">
+                        <div class='vspad-code-editor' style="height: 100%;"></div>
                     </div>
-                    <div class="page" name="1-style.css" style="display: none;">
-                        <p>Style.css</p>
+                    <div class="page" name="style.css" index="0" modes="css" style="display: none;">
+                        <div class='vspad-code-editor' style="height: 100%;"></div>
                     </div>
-                    <div class="page" name="2-index.html" style="display: none;">
-                        <p>Index.html Another</p>
+                    <div class="page" name="app.js" index="0" modes="javascript" style="display: none;">
+                        <div class='vspad-code-editor' style="height: 100%;"></div>
                     </div>
-
+                    <div class="page" name="index.html" index="1" modes="html" style="display: none;">
+                        <div class='vspad-code-editor' style="height: 100%;"></div>
+                    </div>
                 </div>
             </div>
 
             <div class="toast-container position-fixed bottom-0 end-0 m-1 my-4 p-3 pb-4">
-
 
                 <div class="notifyAlert toast rounded-0 shadow-none" role="alert" aria-live="assertive"
                     aria-atomic="true" data-bs-autohide="false">
@@ -687,6 +660,7 @@
         integrity="sha512-YEOWpWsG+L2bJKz1lZDT+R6rdZcSWPydm2G0VRBjihQKS9QDk6N2HQXNjWy9ZJ0EeDA3TEuPhSxK7xb1d1866w=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.17.0/ext-language_tools.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-beautify.js"></script>
 
     <!-- Snippets -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.24.0/snippets/css.min.js"
