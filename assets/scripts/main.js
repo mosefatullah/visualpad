@@ -254,38 +254,37 @@ allButtonsOfSidebar.map((b) => {
 
 //- Search Action
 var searchOptions = {
+ backwards: false,
  wrap: true,
  caseSensitive: false,
  wholeWord: false,
  regExp: false,
 };
 var searchingOnPage = () => {
-    if (editorCurrent) {
-        let count = editorCurrent.findAll(searchInput.val(), {
-         backwards: false,
-         wrap: true,
-         caseSensitive: false,
-         wholeWord: false,
-         regExp: false,
-        });
-        $(".search-section .input-group p").html(count + " results");
-       }
-       if (searchInput.val().length === 0) {
-        searchNextBtn.attr("disabled", "disabled");
-        searchPrevBtn.attr("disabled", "disabled");
-       } else {
-        searchNextBtn.removeAttr("disabled");
-        searchPrevBtn.removeAttr("disabled");
-       }
+ if (editorCurrent) {
+  let count = editorCurrent.findAll(searchInput.val(), searchOptions);
+  $(".search-section .input-group p").html(count + " results");
+ }
+ if (searchInput.val().length === 0) {
+  searchNextBtn.attr("disabled", "disabled");
+  searchPrevBtn.attr("disabled", "disabled");
+ } else {
+  searchNextBtn.removeAttr("disabled");
+  searchPrevBtn.removeAttr("disabled");
+ }
 };
 searchInput.on("input", searchingOnPage);
 searchBtn.on("click", searchingOnPage);
 
 searchPrevBtn.on("click", () => {
- if (editorCurrent) editorCurrent.findPrevious();
+ if (editorCurrent) {
+  editorCurrent.findPrevious();
+ }
 });
 searchNextBtn.on("click", () => {
- if (editorCurrent) editorCurrent.findNext();
+ if (editorCurrent) {
+  editorCurrent.findNext();
+ }
 });
 
 searchClear.on("click", () => {
@@ -299,8 +298,8 @@ searchClear.on("click", () => {
 
 searchReplaceBtn.on("click", function () {
  if (editorCurrent) {
-  editorCurrent.replace(searchReplace.val());
   searchOptions.needle = searchReplace.val();
+  editorCurrent.replace(searchReplace.val());
  }
 });
 
@@ -311,6 +310,9 @@ searchReplaceAllBtn.on("click", function () {
   searchOptions.needle = searchText;
   editorCurrent.replaceAll(replaceText, searchOptions);
   $(".search-section .input-group p").html("0 results");
+  editorCurrent.find("");
+  searchNextBtn.attr("disabled", "disabled");
+  searchPrevBtn.attr("disabled", "disabled");
  }
 });
 
